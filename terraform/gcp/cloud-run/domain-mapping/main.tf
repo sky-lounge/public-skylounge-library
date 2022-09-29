@@ -50,7 +50,7 @@ resource "google_cloud_run_service_iam_member" "auth" {
   location = data.google_cloud_run_service.crs.location
   project  = data.google_cloud_run_service.crs.project
   service  = data.google_cloud_run_service.crs.name
-  role = "roles/invoker"
+  role = "roles/run.invoker"
   member = var.cloud_run_invoker
 }
 
