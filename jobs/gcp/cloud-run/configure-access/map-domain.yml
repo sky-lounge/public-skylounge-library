@@ -36,7 +36,8 @@ map-domain-noauth:
         dns_zone_name = "$DNS_ZONE_NAME"
         cloud_run_domain = "$CLOUD_RUN_DOMAIN"
         cloud_run_location = "$CLOUD_RUN_LOCATION"
-        cloud_run_service_name = "$CLOUD_RUN_SERVICE_NAME"      
+        cloud_run_service_name = "$CLOUD_RUN_SERVICE_NAME" 
+        cloud_run_invoker = "$CLOUD_RUN_INVOKER"     
         EOF
       env:
         GCP_PROJECT: ((gcp_project))
@@ -44,6 +45,7 @@ map-domain-noauth:
         CLOUD_RUN_DOMAIN: ((cloud_run_domain))
         CLOUD_RUN_LOCATION: ((cloud_run_location))
         CLOUD_RUN_SERVICE_NAME: ${{ github.event.repository.name }}-development
+        CLOUD_RUN_INVOKER: ((cloud_run_invoker))
     - name: Terraform Apply
       run: |
         terraform apply -auto-approve
