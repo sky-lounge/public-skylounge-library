@@ -1,0 +1,85 @@
+---
+name: Development
+on:
+  push:
+    branches:
+      - main
+    paths: ((build_paths))
+    ignore_paths:
+      - development-version.txt
+      - production-version.txt
+jobs:
+  build:
+    name: Build container image
+    permissions:
+      contents: "read"
+      id-token: "write"
+    runs-on: ubuntu-latest
+    env:
+      REGISTRY: ((registry_full_url))
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+      - name: Set image name
+        run: |
+          echo "IMAGE_NAME=${{ env.REGISTRY }}/${{ github.event.repository.name }}:${{ github.sha }}" >> $GITHUB_ENV
+      - id: "auth"
+        name: "Authenticate to Google Cloud"
+        uses: "google-github-actions/auth@v0"
+        with:
+          credentials_json: "${{ secrets.GOOGLE_CREDENTIALS_DEV }}"
+      - skylounge-step: build-container-image
+      # clamav
+      - name: Push container image
+        run: |
+          gcloud auth configure-docker $REGISTRY_BASE_URL
+          docker push ${{ env.IMAGE_NAME }}
+        env:
+          REGISTRY_BASE_URL: ((registry_base_url))
+
+  deploy:
+    needs: build
+    name: Deploy to development
+    runs-on: ubuntu-latest
+    env:
+      REGISTRY: ((registry_full_url))
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+      - name: Set image and service name
+        run: |
+          sed -i -e 's%${SERVICE_NAME}%'"$SERVICE_NAME"'%g' ./service.yaml
+          sed -i -e 's%${IMAGE_NAME}%'"$IMAGE_NAME"'%g' ./service.yaml
+          sed -i -e 's%${ENVIRONMENT}%'"$ENVIRONMENT"'%g' ./service.yaml
+        env:
+          SERVICE_NAME: "${{ github.event.repository.name }}"
+          IMAGE_NAME: "${{ env.REGISTRY }}/${{ github.event.repository.name }}:${{ github.sha }}"
+          ENVIRONMENT: development
+      - id: auth
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v0
+        with:
+          credentials_json: "${{ secrets.GOOGLE_CREDENTIALS_DEV }}"
+      - id: deploy
+        uses: google-github-actions/deploy-cloudrun@v0
+        with:
+          metadata: ./service.yaml
+  
+  configure-access: skylounge-job
+  
+  artifact-version:
+    needs: deploy
+    name: Update artifact version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+      - name: Update Artifact Version
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          echo "${{ github.sha }}" > development-version.txt
+          git add development-version.txt
+          git commit -m "update development version: ${{ github.sha }}"
+          git pull --rebase
+          git push

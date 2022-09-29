@@ -1,0 +1,27 @@
+id: cloud-run
+github-org: sky-lounge
+github-repo: public-skylounge-library
+display-name: Google Cloud Run
+description: |
+  **This blueprint is a WORK IN PROGRESS.** Use it at your own risk.
+
+documentation: |
+  # Using this blueprint
+
+template-uri: sky-lounge/public-skylounge-library/blueprints/cloud-run/blueprint.yml
+tags:
+  - container-build
+  - virus-scan
+  - gcp
+  - penetration-test
+
+workflows:
+  - workflow: development
+    description: |
+      Automates the lifecycle of the development environment. The workflow consists of the following jobs: unit test, build, deploy, integration test, and update the artifact version.
+
+    documentation: |
+      foo
+    template-uri: sky-lounge/public-skylounge-library/blueprints/cloud-run/development.yml
+    branch: main
+    icon: bi bi-code-slash

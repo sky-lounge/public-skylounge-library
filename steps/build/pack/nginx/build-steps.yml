@@ -1,0 +1,13 @@
+---
+steps:
+  - name: Setup Pack
+    uses: buildpacks/github-actions/setup-pack@v4.8.0
+  - name: Pack build
+    run: |
+      set -x
+      pack build \
+        ${{ env.IMAGE_NAME }} \
+        --builder paketobuildpacks/builder:base \
+        --buildpack paketo-buildpacks/nginx \
+        --env BP_WEB_SERVER=nginx \
+        --path .

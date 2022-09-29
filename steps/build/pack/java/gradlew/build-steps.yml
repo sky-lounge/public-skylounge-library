@@ -1,0 +1,25 @@
+---
+steps:
+  - name: Set up Java
+    uses: actions/setup-java@v3
+    with:
+      distribution: "liberica"
+      java-version: ((jvm_version))
+      cache: "gradle"
+  - name: Unit test
+    run: ./gradlew test
+  - name: Build Jar
+    run: ./gradlew assemble
+  - name: Setup Pack
+    uses: buildpacks/github-actions/setup-pack@v4.8.0
+  - name: Pack build
+    run: |
+      set -x
+      pack build --volume $HOME/.gradle:/home/cnb/.gradle:rw \
+        ${{ env.IMAGE_NAME }} \
+        --builder paketobuildpacks/builder:base \
+        --env BP_JVM_VERSION=${{ env.BP_JVM_VERSION}} \
+        --path ${{ env.JAR_PATH }}
+    env:
+      BP_JVM_VERSION: ((jvm_version))
+      JAR_PATH: ((jar_path))
