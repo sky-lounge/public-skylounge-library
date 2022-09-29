@@ -8,7 +8,7 @@ description: |
 documentation: |
   # Using this blueprint
 
-template-uri: sky-lounge/public-skylounge-library/blueprints/cloud-run/blueprint.yml
+template-uri: sky-lounge/public-skylounge-library/blueprints/gcp/cloud-run/blueprint.yml
 tags:
   - container-build
   - virus-scan
@@ -22,6 +22,6 @@ workflows:
 
     documentation: |
       foo
-    template-uri: sky-lounge/public-skylounge-library/blueprints/cloud-run/development.yml
+    template-uri: sky-lounge/public-skylounge-library/blueprints/gcp/cloud-run/development.yml
     branch: main
     icon: bi bi-code-slash
