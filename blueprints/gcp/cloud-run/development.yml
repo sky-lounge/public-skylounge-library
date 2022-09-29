@@ -1,14 +1,14 @@
 ---
 name: Development
 on:
-  - push:
+  push:
     branches:
       - main
     paths: ((build_paths))
     ignore_paths:
       - development-version.txt
       - production-version.txt
-  - workflow_dispatch:
+  workflow_dispatch:
 jobs:
   build:
     name: Build container image
