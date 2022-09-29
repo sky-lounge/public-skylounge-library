@@ -9,7 +9,7 @@ map-domain-noauth:
     - name: Checkout terraform
       uses: actions/checkout@v3
       with:
-        repository: sky-lounge/public-skylounge-library/terraform
+        repository: sky-lounge/public-skylounge-library
         ref: main
         path: terraform
     - uses: hashicorp/setup-terraform@v2
