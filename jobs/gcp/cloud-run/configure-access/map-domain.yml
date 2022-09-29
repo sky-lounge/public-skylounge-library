@@ -4,7 +4,7 @@ map-domain-noauth:
   runs-on: ubuntu-latest
   defaults:
     run:
-      working-directory: public-skylounge-library/terraform/gcp/cloud-run/domain-mapping/noauth
+      working-directory: public-skylounge-library/terraform/gcp/cloud-run/domain-mapping
   steps:
     - name: Checkout terraform
       uses: actions/checkout@v3
