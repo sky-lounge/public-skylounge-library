@@ -11,7 +11,7 @@ map-domain-noauth:
       with:
         repository: sky-lounge/public-skylounge-library
         ref: main
-        path: terraform
+        path: public-skylounge-library
     - uses: hashicorp/setup-terraform@v2
     - id: "auth"
       name: "Authenticate to Google Cloud"
