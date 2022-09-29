@@ -1,6 +1,6 @@
 map-domain-noauth:
   needs: deploy
-  name: Map Domain - no auth
+  name: Map Domain
   runs-on: ubuntu-latest
   defaults:
     run:
