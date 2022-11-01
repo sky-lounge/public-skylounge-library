@@ -1,20 +1,13 @@
-id: cloud-run
-github-org: sky-lounge
-github-repo: public-skylounge-library
 display-name: Google Cloud Run
 description: |
   **This blueprint is a WORK IN PROGRESS.** Use it at your own risk.
-
 documentation: |
   # Using this blueprint
-
-template-uri: sky-lounge/public-skylounge-library/blueprints/gcp/cloud-run/blueprint.yml
 tags:
   - container-build
   - virus-scan
   - gcp
   - penetration-test
-
 workflow-templates:
   - name: development
     description: |
