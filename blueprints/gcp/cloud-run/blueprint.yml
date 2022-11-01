@@ -15,13 +15,12 @@ tags:
   - gcp
   - penetration-test
 
-workflows:
+workflow-templates:
   - name: development
     description: |
       Automates the lifecycle of the development environment. The workflow consists of the following jobs: unit test, build, deploy, integration test, and update the artifact version.
-
+    uri: sky-lounge/public-skylounge-library/blueprints/gcp/cloud-run/development.yml
     documentation: |
       foo
-    template-uri: sky-lounge/public-skylounge-library/blueprints/gcp/cloud-run/development.yml
     branch: main
     icon: bi bi-code-slash
