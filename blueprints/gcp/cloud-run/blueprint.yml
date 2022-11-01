@@ -16,7 +16,7 @@ tags:
   - penetration-test
 
 workflows:
-  - workflow: development
+  - name: development
     description: |
       Automates the lifecycle of the development environment. The workflow consists of the following jobs: unit test, build, deploy, integration test, and update the artifact version.
 
