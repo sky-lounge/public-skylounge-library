@@ -1,7 +1,7 @@
 ---
 blueprint-uri: sky-lounge/public-skylounge-library/blueprints/gcp/cloud-run/blueprint.yml
 workflows:
-  - workflow: Development
+  - workflow: development
     jobs:
       - job: build
         steps:
