@@ -6,7 +6,7 @@ workflows:
       - job: build
         steps:
           - step: build-container-image
-            uri: # Enter the URI to the step definition used to build the container image for your application. Example: public-skylounge-library/steps/build/pack/java/gradlew/build.yml
+            uri: # Enter the URI to the step definition used to build the container image for your application. Example: sky-lounge/public-skylounge-library/steps/build/pack/java/gradlew/build.yml
       - job: map-domain
         params:
           tf_state_bucket: # The name of the Google Cloud Storage bucket to store terraform state. Example: tfstate.skylounge.dev
