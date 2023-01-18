@@ -34,7 +34,6 @@ jobs:
           registry_base_url=$(cut -d/ -f 1 <<< $REGISTRY)
           gcloud auth configure-docker $registry_base_url
           docker push ${{ env.IMAGE_NAME }}
-
   deploy:
     needs: build
     name: Deploy to development
@@ -46,7 +45,6 @@ jobs:
         uses: actions/checkout@v3
       - name: Set image and service name
         run: |
-          sed -i -e 's%${SERVICE_NAME}%'"$SERVICE_NAME"'%g' ./service.yaml
           sed -i -e 's%${IMAGE_NAME}%'"$IMAGE_NAME"'%g' ./service.yaml
           sed -i -e 's%${ENVIRONMENT}%'"$ENVIRONMENT"'%g' ./service.yaml
         env:
@@ -62,7 +60,7 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v0
         with:
           metadata: ./service.yaml
-  map-domain:
+  configure-access:
     needs: deploy
     name: Map Domain
     runs-on: ubuntu-latest
