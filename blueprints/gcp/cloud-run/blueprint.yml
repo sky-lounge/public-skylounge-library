@@ -1,8 +1,33 @@
 display-name: Google Cloud Run
 description: |
-  **This blueprint is a WORK IN PROGRESS.** Use it at your own risk.
+  Automates the lifecycle of web applications packaged as container images and deployed to Google Cloud Run with Custom Domain mapping. This blueprint is for trunk based development using the main branch as the trunk.
+
+  The blueprint automates development and production environments. Deployment to production is fully automated but manually triggered via the promote workflow. Artifact versioning is tied to the commit history in git. The documentation for the promote workflow below details the versioning scheme as well as rollback.
 documentation: |
   # Using this blueprint
+
+  The blueprint leverages the following Google Cloud Services:
+  * Artifact Repository for container image storage
+  * Cloud Run for application execution
+  * Custom Domain Mapping
+  * DNS for custom domains
+  * Cloud Storage for Terraform state
+
+  The provisioning for the following resources are NOT part of this blueprint. 
+
+  The following resources should be available before using the blueprint:
+  * A Google project 
+  * Artifact Repository for container image storage
+  * DNS zone for development and production routes
+  * Cloud Storage for Terraform state
+
+  The blueprint will provision the following:
+  * Cloud Run instances with custom domain mapping
+
+  ## Required GitHub Secrets
+  The following secrets should be configured in GitHub Secrets before using this blueprint (either at the repository or organization level):
+    * GOOGLE_CREDENTIALS: Credentials for a service account that can: read/write from the artifact registry, deploy to cloud run, and configure load balancers, dns, and networking for the application.
+
 tags:
   - container-build
   - virus-scan
