@@ -21,4 +21,4 @@ workflow-templates:
 
     uri: sky-lounge/public-skylounge-library/blueprints/demo/hello-skylounge/workflow-templates/hello.yml
     branch: main
-    icon: fa-solid fa-hands
+    icon: fa-solid fa-hand
