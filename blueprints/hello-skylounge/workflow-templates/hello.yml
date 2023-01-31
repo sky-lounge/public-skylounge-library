@@ -1,0 +1,21 @@
+---
+name: Hello (workflow)
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  say-hello:
+    name: Say Hello (job)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code (step)
+        uses: actions/checkout@v3
+      - name: Print run info (step)
+        run: |
+          echo "Repository: ${{ github.event.repository.name }}"
+          echo " "
+          echo "Commit SHA: ${{ github.sha }}"
+          echo " "
+      - skylounge-step: say-hello

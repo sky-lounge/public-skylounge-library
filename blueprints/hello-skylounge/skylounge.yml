@@ -1,0 +1,14 @@
+blueprint-uri: sky-lounge/public-skylounge-library/blueprints/hello-skylounge/blueprint.yml
+
+workflows:
+  - workflow: hello
+    jobs:
+      - job: say-hello
+        steps:
+          - step: say-hello
+            uri:
+              # Specify the URI to the step to in your fork to say hello. This should be
+              # <YOUR-ORG>/hello/skylounge/step/custom-hello-step.yml where <YOUR-ORG> is the org you forked
+              # the hello repo into. Example: spgreenberg/hello/skylounge/step/custom-hello-step.yml
+        params:
+          name: # The name to say hello to. Example: Steve

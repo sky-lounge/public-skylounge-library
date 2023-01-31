@@ -1,0 +1,24 @@
+display-name: Hello SkyLounge
+description: |
+  This blueprint provides an introduction to SkyLounge.
+documentation: |
+  This blueprint has a single workflow that will print some details about the workflow run before running a custom step to say hello.
+tags:
+  - demo
+
+workflow-templates:
+  - name: hello
+    description: |
+      This workflow prints some details about the workflow run before running a custom step to say hello.
+
+    documentation: |
+      ### Job: Say Hello (job)
+
+      The say-hello job does the following:
+
+      * Prints the repository name and commit sha that triggered the workflow run
+      * Says hello (`skylounge-step`)
+
+    uri: sky-lounge/public-skylounge-definitions/blueprints/hello-skylounge/hello.yml
+    branch: main
+    icon: fa-solid fa-hands
