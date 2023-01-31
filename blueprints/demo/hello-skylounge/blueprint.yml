@@ -5,7 +5,7 @@ documentation: |
   This blueprint has a single workflow that will print some details about the workflow run before running a custom step to say hello.
 tags:
   - demo
-
+weight: 100
 workflow-templates:
   - name: hello
     description: |
