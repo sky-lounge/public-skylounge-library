@@ -33,7 +33,7 @@ tags:
   - virus-scan
   - gcp
   - penetration-test
-# weight: 1
+weight: 1
 workflow-templates:
   - name: development
     description: |
