@@ -19,6 +19,6 @@ workflow-templates:
       * Prints the repository name and commit sha that triggered the workflow run
       * Says hello (`skylounge-step`)
 
-    uri: sky-lounge/public-skylounge-definitions/blueprints/hello-skylounge/hello.yml
+    uri: sky-lounge/public-skylounge-definitions/blueprints/hello-skylounge/workflow-templates/hello.yml
     branch: main
     icon: fa-solid fa-hands
