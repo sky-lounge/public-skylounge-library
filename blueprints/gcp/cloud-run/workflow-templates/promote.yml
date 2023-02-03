@@ -1,0 +1,21 @@
+---
+name: Promote
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    name: Promote container image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Update Production Version
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          cp development-version.txt production-version.txt
+          git add production-version.txt
+          git commit -m "update production version: $(cat production-version.txt)"
+          git pull --rebase
+          git push
