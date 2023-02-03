@@ -6,6 +6,9 @@ workflows:
       - job: say-hello
         steps:
           - step: say-hello
-            uri: sky-lounge/hello/skylounge/step/custom-hello-step.yml
+            uri:
+              # Specify the URI to the step to in your fork to say hello. This should be
+              # <YOUR-ORG>/hello/skylounge/step/custom-hello-step.yml where <YOUR-ORG> is the org you forked
+              # the hello repo into. Example: spgreenberg/hello/skylounge/step/custom-hello-step.yml
         params:
-          name: Steve
+          name: # The name to say hello to. Example: Steve
