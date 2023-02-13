@@ -1,4 +1,4 @@
-blueprint-uri: sky-lounge/public-skylounge-library/blueprints/hello-skylounge/blueprint.yml
+blueprint-uri: sky-lounge/public-skylounge-library/blueprints/demo/hello-skylounge/blueprint.yml
 
 workflows:
   - workflow: hello
