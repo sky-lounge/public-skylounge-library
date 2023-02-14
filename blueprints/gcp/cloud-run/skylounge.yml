@@ -17,5 +17,16 @@ workflows:
           cloud_run_invoker: # The name of the user allowed to invoke your Cloud Run service. For public access, use `allUsers`. Example: allUsers
     params:
       build_paths: # An array of paths which trigger the build job on change. Example: ["src/**", "build.gradle", "service.yaml"]
+  - workflow: production
+    jobs:
+      - job: configure-access
+        params:
+          tf_state_bucket: # The name of the Google Cloud Storage bucket to store terraform state. Example: tfstate.skylounge.io
+          gcp_project: # The Google Cloud project name where the application is deployed. Example: skylounge-prod
+          dns_zone_name: # The zone name in Google DNS where to configure the domain mapping. Example: skyloungeprod
+          cloud_run_domain: # The domain to configure for your application. Example: dashboard.skylounge.io
+          cloud_run_location: # The location where your application is deployed. Example: us-central1
+          cloud_run_invoker: # The name of the user allowed to invoke your Cloud Run service. For public access, use `allUsers`. Example: allUsers
+
 params:
   registry_url: # The artifact registry url where container images are stored. Example: us-central1-docker.pkg.dev/skylounge-common/skylounge-registry
