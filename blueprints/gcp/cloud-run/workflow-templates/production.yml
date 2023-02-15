@@ -13,7 +13,6 @@ on:
 
 jobs:
   deploy:
-    needs: build
     name: Deploy to production
     runs-on: ubuntu-latest
     env:
