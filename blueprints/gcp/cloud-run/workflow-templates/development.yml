@@ -47,11 +47,10 @@ jobs:
       - name: Set image and service name
         run: |
           sed -i -e 's%${IMAGE_NAME}%'"$IMAGE_NAME"'%g' ./service.yaml
-          sed -i -e 's%${ENVIRONMENT}%'"$ENVIRONMENT"'%g' ./service.yaml
+          sed -i -e 's%${GCP_PROJECT}%'"$GCP_PROJECT"'%g' ./service.yaml
         env:
-          SERVICE_NAME: "${{ github.event.repository.name }}"
           IMAGE_NAME: "${{ env.REGISTRY }}/${{ github.event.repository.name }}:${{ github.sha }}"
-          ENVIRONMENT: development
+          GCP_PROJECT: ((gcp_project))
       - id: auth
         name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v0

@@ -10,6 +10,7 @@ on:
   workflow_run:
     workflows: ["Promote"]
     types: ["completed"]
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -24,13 +25,11 @@ jobs:
         run: |
           deploy_sha=$(cat production-version.txt | xargs)
           image_name="${IMAGE_NAME}:${deploy_sha}"
-          sed -i -e 's%${SERVICE_NAME}%'"$SERVICE_NAME"'%g' ./service.yaml
           sed -i -e 's%${IMAGE_NAME}%'"$image_name"'%g' ./service.yaml
-          sed -i -e 's%${ENVIRONMENT}%'"$ENVIRONMENT"'%g' ./service.yaml
+          sed -i -e 's%${GCP_PROJECT}%'"$GCP_PROJECT"'%g' ./service.yaml
         env:
-          SERVICE_NAME: "${{ github.event.repository.name }}"
           IMAGE_NAME: "${{env.REGISTRY}}/${{github.event.repository.name}}"
-          ENVIRONMENT: production
+          GCP_PROJECT: ((gcp_project))
       - id: auth
         name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v0
