@@ -9,6 +9,7 @@ on:
     ignore_paths:
       - development-version.txt
       - production-version.txt
+  workflow_dispatch:
 jobs:
   build:
     name: Build container image
