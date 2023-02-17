@@ -47,7 +47,7 @@ data "google_cloud_run_service" "crs" {
 }
 
 resource "google_cloud_run_service_iam_member" "auth" {
-  count    = var.environment == "prod" ? 1 : 0
+  count    = var.cloud_run_invoker != "" ? 1 : 0
   location = data.google_cloud_run_service.crs.location
   project  = data.google_cloud_run_service.crs.project
   service  = data.google_cloud_run_service.crs.name
