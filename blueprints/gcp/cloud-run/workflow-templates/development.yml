@@ -101,7 +101,6 @@ jobs:
           if [ -n "$CLOUD_RUN_INVOKER" ]; then
             echo "cloud_run_invoker = \"$CLOUD_RUN_INVOKER\"" >> terraform.tfvars
           fi
-          cat terraform.tfvars
         env:
           GCP_PROJECT: ((gcp_project))
           DNS_ZONE_NAME: ((dns_zone_name))

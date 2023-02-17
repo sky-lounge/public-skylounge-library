@@ -78,9 +78,8 @@ jobs:
           echo "cloud_run_location = \"$CLOUD_RUN_LOCATION\"" >> terraform.tfvars
           echo "cloud_run_service_name = \"$CLOUD_RUN_SERVICE_NAME\"" >> terraform.tfvars
           if [ -n "$CLOUD_RUN_INVOKER" ]; then
-          echo "cloud_run_invoker = \"$CLOUD_RUN_INVOKER\"" >> terraform.tfvars
+            echo "cloud_run_invoker = \"$CLOUD_RUN_INVOKER\"" >> terraform.tfvars
           fi
-          cat terraform.tfvars
         env:
           GCP_PROJECT: ((gcp_project))
           DNS_ZONE_NAME: ((dns_zone_name))
