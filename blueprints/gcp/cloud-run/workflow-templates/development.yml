@@ -94,13 +94,13 @@ jobs:
         run: terraform init -backend-config=config.gcs.tfbackend
       - name: Prepare Terraform Vars File
         run: |
-          echo "gcp_project = \"{$GCP_PROJECT}\" > terraform.tfvars
-          echo "dns_zone_name = \"${DNS_ZONE_NAME}\" >> terraform.tfvars
-          echo "cloud_run_domain = \"${CLOUD_RUN_DOMAIN}\" >> terraform.tfvars
-          echo "cloud_run_location = \"${CLOUD_RUN_LOCATION}\" >> terraform.tfvars
-          echo "cloud_run_service_name = \"${CLOUD_RUN_SERVICE_NAME}\" >> terraform.tfvars
+          echo "gcp_project = \"{$GCP_PROJECT}\"" > terraform.tfvars
+          echo "dns_zone_name = \"${DNS_ZONE_NAME}\"" >> terraform.tfvars
+          echo "cloud_run_domain = \"${CLOUD_RUN_DOMAIN}\"" >> terraform.tfvars
+          echo "cloud_run_location = \"${CLOUD_RUN_LOCATION}\"" >> terraform.tfvars
+          echo "cloud_run_service_name = \"${CLOUD_RUN_SERVICE_NAME}\"" >> terraform.tfvars
           if [ -n "${CLOUD_RUN_INVOKER}" ]; then
-            echo "cloud_run_invoker = \"${CLOUD_RUN_INVOKER}\" >> terraform.tfvars
+            echo "cloud_run_invoker = \"${CLOUD_RUN_INVOKER}\"" >> terraform.tfvars
           fi
         env:
           GCP_PROJECT: ((gcp_project))
