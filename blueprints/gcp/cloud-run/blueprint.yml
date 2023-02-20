@@ -87,6 +87,10 @@ workflow-templates:
       * GCP will provision a certificate for this application during the first execution of this job (and subsequently automatically renew it). **Therefore, the application will not be available until this is complete. This process can take up to 30 minutes**. Subsequent updates are not affected by this provisioning process.
       * The job optionally configures access control for the application. Refer to the documentation in the `skylounge.yml` for configuration options.
 
+      #### artifact version
+
+      The version of the container image deployed is stored in the root of the repository in a file named `development-version.txt`. This provides absolute traceability, through git history, of the deployed version at a given point in time.
+
     branch: main
     icon: bi bi-code-slash
   - name: promote
