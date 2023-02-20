@@ -2,7 +2,8 @@ display-name: Google Cloud Run
 description: |
   Automates the lifecycle of web applications packaged as container images and deployed to Google Cloud Run with Custom Domain mapping. This blueprint is for trunk based development using the main branch as the trunk.
 
-  The blueprint automates development and production environments. Deployment to production is fully automated but manually triggered via the promote workflow. Artifact versioning is tied to the commit history in git. The documentation for the promote workflow below details the versioning scheme as well as rollback.
+  The blueprint automates development and production environments. Deployment to production is fully automated but manually triggered via the promote workflow. Artifact versioning is tied to the commit history in git for traceability. The documentation for the promote workflow below details the versioning scheme as well as rollback.
+
 documentation: |
   # Using this blueprint
 
@@ -18,15 +19,17 @@ documentation: |
   The following resources should be available before using the blueprint:
   * A Google project 
   * Artifact Repository for container image storage
-  * DNS zone for development and production routes
+  * DNS zones for development and production
   * Cloud Storage for Terraform state
 
   The blueprint will provision the following:
   * Cloud Run instances with custom domain mapping
 
   ## Required GitHub Secrets
+
   The following secrets should be configured in GitHub Secrets before using this blueprint (either at the repository or organization level):
-    * GOOGLE_CREDENTIALS: Credentials for a service account that can: read/write from the artifact registry, deploy to cloud run, and configure load balancers, dns, and networking for the application.
+    * GOOGLE_CREDENTIALS_DEV: Credentials for a service account that can: read/write from the artifact registry, deploy to cloud run, and configure service networking, and dns.
+    * GOOGLE_CREDENTIALS_PROD: Credentials for a service account that can: read/write from the artifact registry, deploy to cloud run, and configure service networking, and dns.
 
 tags:
   - container-build
@@ -37,10 +40,23 @@ weight: 1
 workflow-templates:
   - name: development
     description: |
-      Automates the lifecycle of the development environment. The workflow consists of the following jobs: unit test, build, deploy, integration test, and update the artifact version.
+      Automates the lifecycle of the development environment. The workflow consists of the following jobs: build (SkyLounge job), deploy, configure access, and update the artifact version.
     uri: sky-lounge/public-skylounge-library/blueprints/gcp/cloud-run/workflow-templates/development.yml
     documentation: |
-      foo
+      The GOOGLE_CREDENTIALS_DEV will be used to authenticate to GCP.
+
+      ## Jobs
+
+      This workflow consists of the following jobs:
+
+      ### build
+
+      Builds the container image. 
+
+      * The image name is set to: ((registry_url))/<name_of_the_repository>:<commit_sha>. The commit_sha is used for absolute traceability to a specific commit.
+      * **build-container-image (skylounge-step)**: A configurable step to build the container image (see step library for buildpack or Docker implementations). This step must use the image name above, available as the $IMAGE_NAME environment variable.
+      * Publishes the conatiner image to the artifact registry.
+
     branch: main
     icon: bi bi-code-slash
   - name: promote
