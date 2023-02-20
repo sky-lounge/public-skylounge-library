@@ -79,6 +79,14 @@ workflow-templates:
                 run.googleapis.com/cloudsql-instances: "${GCP_PROJECT}:us-central1:skylounge-db"
         ```
 
+      #### configure access
+
+      Configures access to the Cloud Run application using Terraform. The terraform is available here: https://github.com/sky-lounge/public-skylounge-library/terraform/gcp/cloud-run/domain-mapping.
+
+      * This job creates a dns route for the application. 
+      * GCP will provision a certificate for this application during the first execution of this job (and subsequently automatically renew it). **Therefore, the application will not be available until this is complete. This process can take up to 30 minutes**. Subsequent updates are not affected by this provisioning process.
+      * The job optionally configures access control for the application. Refer to the documentation in the `skylounge.yml` for configuration options.
+
     branch: main
     icon: bi bi-code-slash
   - name: promote
