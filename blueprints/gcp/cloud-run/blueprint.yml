@@ -125,7 +125,7 @@ workflow-templates:
   - name: daily-scans
     description: |
       Performs scans against the production deployment each day at 2 AM. Vulnerabilities are reported via a GitHub issue.
-    uri: sky-lounge/public-skylounge-library/blueprints/gcp/cloud-run/workflow-templates/daily-scan.yml
+    uri: sky-lounge/public-skylounge-library/blueprints/gcp/cloud-run/workflow-templates/daily-scans.yml
     documentation: |
       ## OWASP ZAP Full Scan
 
