@@ -1,0 +1,59 @@
+name: 'SkyLounge OWASP Zap Full Scan'
+author: 'SkyLounge'
+description: 'Run OWASP Zap Full scan for SkyLounge'
+branding:
+  icon: 'briefcase'
+  color: 'gray-dark'
+
+inputs:
+  target:
+    description: 'The URL to be scanned'
+    required: true
+  rules_file_name:
+    description: 'Optional relative path to configuration file for OWASP Zap'
+    required: false
+  cmd_options:
+    description: 'Optional additional command-line option string for OWASP Zap'
+    required: false
+  issue_title:
+    description: 'Optional title string for GitHub issue with the scan report'
+    default: 'OWASP ZAP Full Scan'
+    required: false
+  fail:
+    description: 'Whether to fail the action if OWASP Zap identifies any alerts'
+    default: 'false'
+    required: false
+  quiet:
+    description: 'Whether NOT to create a GitHub issue with the scan report'
+    default: 'true'
+    required: false
+
+outputs:
+  issue_num:
+    description: 'Number of the created or updated GitHub issue'
+    value: ${{ steps.label.outputs.issue_num }}
+
+runs:
+  using: 'composite'
+  steps:
+  - uses: actions/checkout@v3
+  - name: Run OWASP Zap full scan
+    uses: zaproxy/action-full-scan@v0.4.0
+    id: scan
+    with:
+      target: ${{ inputs.target }}
+      rules_file_name: ${{ inputs.rules_file_name }}
+      cmd_options: ${{ inputs.cmd_options }}
+      allow_issue_writing: ${{ inputs.quiet == 'false' }}
+      issue_title: ${{ inputs.issue_title }}
+      token: ${{ github.token }}
+      fail_action: ${{ inputs.fail == 'true' }}
+  - name: Label OWASP ZAP issue as SkyLounge
+    if: ${{ inputs.quiet != 'true' }}
+    run: ./actions/common/label-issue.sh
+    shell: bash
+    id: label
+    env:
+      TITLE: ${{ inputs.issue_title }}
+      GH_TOKEN: ${{ github.token }}
+      QUIET: ${{ inputs.quiet }}
