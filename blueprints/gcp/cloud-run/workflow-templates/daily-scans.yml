@@ -14,6 +14,12 @@ jobs:
           repository: sky-lounge/public-skylounge-library
           ref: main
           path: public-skylounge-library
+      - name: Checkout library
+        uses: actions/checkout@v3
+        with:
+          repository: ((rules_repository))
+          ref: main
+          path: rules-repository
       - name: OWASP ZAP Full Scan
         id: scan
         uses: ./public-skylounge-library/actions/owasp-zap-full
@@ -22,5 +28,5 @@ jobs:
           quiet: false
           fail: true
           issue_title: OWASP Full Scan - Production
-          #cmd_options: "-s -l WARN" # alert only on warn or above
-          #rules_file_name:
+          cmd_options: "-s -l WARN" # alert only on warn or above
+          rules_file_name: ./rules-repository/((rules_path))

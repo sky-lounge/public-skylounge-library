@@ -32,5 +32,7 @@ workflows:
       - job: owasp-zap-full-scan
         params:
           endpoint_to_scan: # The production endpoint to scan. Example: https://dashboard.skylounge.io
+          rules_repository: # The GitHub repository holding the rules. SkyLounge must have access to this repository. Example: sky-lounge/private-skylounge-library
+          rules_path: # The path in the 'rules_repository' to the rules file. Example: owasp/rules.cfg
 params:
   registry_url: # The artifact registry url where container images are stored. Example: us-central1-docker.pkg.dev/skylounge-common/skylounge-registry
