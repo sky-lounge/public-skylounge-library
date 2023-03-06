@@ -6,6 +6,7 @@ on:
   workflow_dispatch: # allow manual trigger
 jobs:
   owasp-zap-full-scan:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout library
         uses: actions/checkout@v3
