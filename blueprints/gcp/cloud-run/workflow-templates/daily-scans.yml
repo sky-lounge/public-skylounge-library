@@ -1,0 +1,25 @@
+---
+name: Daily Scans
+on:
+  schedule:
+    - cron: "0 2 * * *" # Run everyday at 2AM
+  workflow_dispatch: # allow manual trigger
+jobs:
+  owasp-zap-full-scan:
+    steps:
+      - name: Checkout library
+        uses: actions/checkout@v3
+        with:
+          repository: sky-lounge/public-skylounge-library
+          ref: main
+          path: public-skylounge-library
+      - name: OWASP ZAP Full Scan
+        id: scan
+        uses: public-skylounge-library/actions/owasp-zap-full
+        with:
+          target: ((endpoint_to_scan))
+          quiet: false
+          fail: true
+          issue_title: OWASP Full Scan - Production
+          #cmd_options: "-s -l WARN" # alert only on warn or above
+          #rules_file_name:

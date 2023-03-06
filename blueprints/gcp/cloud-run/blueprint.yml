@@ -121,3 +121,14 @@ workflow-templates:
       Rollback can be completed by updating the production-version.txt file to the SHA of the version you would like to roll back to. This will trigger the production workflow to complete the rollback.
     branch: main
     icon: bi bi-check2-circle
+
+  - name: daily-scans
+    description: |
+      Performs scans against the production deployment each day at 2 AM. Vulnerabilities are reported via a GitHub issue.
+    uri: sky-lounge/public-skylounge-library/blueprints/gcp/cloud-run/workflow-templates/daily-scan.yml
+    documentation: |
+      ## OWASP ZAP Full Scan
+
+      Performs an [OWASP ZAP Full Scan](https://www.zaproxy.org/docs/docker/full-scan/) against the production instance using this [GitHub Action](https://github.com/sky-lounge/public-skylounge-library/tree/main/actions/owasp-zap-full).
+    branch: main
+    icon: bi bi-box-arrow-in-right
