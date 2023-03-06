@@ -15,7 +15,7 @@ jobs:
           path: public-skylounge-library
       - name: OWASP ZAP Full Scan
         id: scan
-        uses: public-skylounge-library/actions/owasp-zap-full
+        uses: ./public-skylounge-library/actions/owasp-zap-full
         with:
           target: ((endpoint_to_scan))
           quiet: false
