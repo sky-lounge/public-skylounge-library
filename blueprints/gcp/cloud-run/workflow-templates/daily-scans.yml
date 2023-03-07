@@ -20,6 +20,11 @@ jobs:
           repository: ((rules_repository))
           ref: main
           path: rules-repository
+      - name: Set rules file name
+        run: |
+          echo "RULES_FILE_NAME=./rules-repository/${RULES_PATH}" >> $GITHUB_ENV
+        env:
+          RULES_PATH: ((rules_path))
       - name: OWASP ZAP Full Scan
         id: scan
         uses: ./public-skylounge-library/actions/owasp-zap-full
@@ -29,4 +34,4 @@ jobs:
           fail: true
           issue_title: OWASP Full Scan - Production
           cmd_options: "-s -l WARN" # alert only on warn or above
-          rules_file_name: ./rules-repository/((rules_path))
+          rules_file_name: ${{env.RULES_FILE_NAME}}
