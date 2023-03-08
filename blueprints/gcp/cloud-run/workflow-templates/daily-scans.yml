@@ -8,12 +8,6 @@ jobs:
   owasp-zap-full-scan:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout library
-        uses: actions/checkout@v3
-        with:
-          repository: sky-lounge/public-skylounge-library
-          ref: main
-          path: public-skylounge-library
       - name: Checkout source
         uses: actions/checkout@v3
         with:
@@ -26,18 +20,25 @@ jobs:
           rules_file_name: ./source/skylounge/owasp/rules.cfg
           # cmd_options: ${{ inputs.cmd_options }}
           # allow_issue_writing: ${{ inputs.quiet == 'false' }}
-          issue_title: OWASP Full Scan - Production
+          issue_title: Daily Scans - OWASP Full Scan - ${{ github.run_number }}
           token: ${{ github.token }}
-          fail_action: true
+          fail_action: false
+      - name: Checkout library
+        uses: actions/checkout@v3
+        with:
+          repository: sky-lounge/public-skylounge-library
+          ref: main
+          path: public-skylounge-library
       - name: Label OWASP ZAP issue as SkyLounge
         if: ${{ inputs.quiet != 'true' }}
         run: ./public-skylounge-library/actions/common/label-issue.sh
         shell: bash
         id: label
         env:
-          TITLE: OWASP Full Scan - Production
+          TITLE: Daily Scans - OWASP Full Scan - ${{ github.run_number }}
           GH_TOKEN: ${{ github.token }}
           QUIET: false
+
       # - name: OWASP ZAP Full Scan
       #   id: scan
       #   uses: ./public-skylounge-library/actions/owasp-zap-full
