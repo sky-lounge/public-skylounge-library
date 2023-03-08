@@ -10,42 +10,12 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
-        with:
-          path: source
       - name: Run OWASP Zap full scan
         uses: zaproxy/action-full-scan@v0.4.0
         id: scan
         with:
           target: ((endpoint_to_scan))
-          rules_file_name: ./source/skylounge/owasp/rules.cfg
-          # cmd_options: ${{ inputs.cmd_options }}
-          # allow_issue_writing: ${{ inputs.quiet == 'false' }}
-          issue_title: Daily Scans - OWASP Full Scan - ${{ github.run_number }}
+          rules_file_name: ./skylounge/owasp/rules.cfg
+          issue_title: "Daily Scans - OWASP Full Scan - ${{ github.run_number }}"
           token: ${{ github.token }}
           fail_action: false
-      - name: Checkout library
-        uses: actions/checkout@v3
-        with:
-          repository: sky-lounge/public-skylounge-library
-          ref: main
-          path: public-skylounge-library
-      - name: Label OWASP ZAP issue as SkyLounge
-        if: ${{ inputs.quiet != 'true' }}
-        run: ./public-skylounge-library/actions/common/label-issue.sh
-        shell: bash
-        id: label
-        env:
-          TITLE: Daily Scans - OWASP Full Scan - ${{ github.run_number }}
-          GH_TOKEN: ${{ github.token }}
-          QUIET: false
-
-      # - name: OWASP ZAP Full Scan
-      #   id: scan
-      #   uses: ./public-skylounge-library/actions/owasp-zap-full
-      #   with:
-      #     target: ((endpoint_to_scan))
-      #     quiet: false
-      #     fail: true
-      #     issue_title: OWASP Full Scan - Production
-      #     cmd_options: "-s -l WARN" # alert only on warn or above
-      #     rules_file_name: ./source/skylounge/owasp/rules.cfg
