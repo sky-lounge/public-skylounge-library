@@ -16,6 +16,8 @@ jobs:
           path: public-skylounge-library
       - name: Checkout source
         uses: actions/checkout@v3
+        with:
+          path: source
       - name: OWASP ZAP Full Scan
         id: scan
         uses: ./public-skylounge-library/actions/owasp-zap-full
@@ -25,4 +27,4 @@ jobs:
           fail: true
           issue_title: OWASP Full Scan - Production
           cmd_options: "-s -l WARN" # alert only on warn or above
-          rules_file_name: ./skylounge/owasp/rules.cfg
+          rules_file_name: ./source/skylounge/owasp/rules.cfg
