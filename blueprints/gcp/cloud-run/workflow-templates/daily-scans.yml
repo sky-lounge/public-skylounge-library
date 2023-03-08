@@ -31,7 +31,7 @@ jobs:
           fail_action: true
       - name: Label OWASP ZAP issue as SkyLounge
         if: ${{ inputs.quiet != 'true' }}
-        run: ./actions/common/label-issue.sh
+        run: ./public-skylounge-library/actions/common/label-issue.sh
         shell: bash
         id: label
         env:
