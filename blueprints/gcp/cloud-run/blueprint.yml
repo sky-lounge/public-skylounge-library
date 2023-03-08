@@ -44,7 +44,7 @@ workflow-templates:
 
       When using this workflow, you will provide the following custom automation and configuration:
 
-      * **skylounge-job: integration-test**: You will provide a URI to your integration sky-lounge/public-skylounge-library/blueprints/gcp/cloud-run/workflow-templates/daily-scans.yml
+      * **skylounge-job: integration-test**: You will provide a URI to your integration test
 
       * **skylounge-step: build-container-image**: You can pick how you build your container image, using either Docker or Pack.
 
