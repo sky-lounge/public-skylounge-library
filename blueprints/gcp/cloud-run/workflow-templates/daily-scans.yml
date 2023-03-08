@@ -15,7 +15,7 @@ jobs:
         id: scan
         with:
           target: ((endpoint_to_scan))
-          rules_file_name: ./skylounge/owasp/rules.cfg
+          rules_file_name: skylounge/owasp/rules.cfg
           issue_title: "Daily Scans - OWASP Full Scan - ${{ github.run_number }}"
           token: ${{ github.token }}
           fail_action: false
