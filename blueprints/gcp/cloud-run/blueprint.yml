@@ -42,13 +42,11 @@ workflow-templates:
     description: |
       Automates the lifecycle of the development environment. The workflow consists of the following jobs: build, deploy, configure access, and update the artifact version. The build-container-image step is customizable.
 
-      ### Application-specific configuration
-
       When using this workflow, you will provide the following custom automation and configuration:
 
-      **skylounge-job: integration-test**: You will provide a URI to your integration sky-lounge/public-skylounge-library/blueprints/gcp/cloud-run/workflow-templates/daily-scans.yml
+      * **skylounge-job: integration-test**: You will provide a URI to your integration sky-lounge/public-skylounge-library/blueprints/gcp/cloud-run/workflow-templates/daily-scans.yml
 
-      **skylounge-step: build-container-image**: You can pick how you build your container image, using either Docker or Pack.
+      * **skylounge-step: build-container-image**: You can pick how you build your container image, using either Docker or Pack.
 
     uri: sky-lounge/public-skylounge-library/blueprints/gcp/cloud-run/workflow-templates/development.yml
     documentation: |
