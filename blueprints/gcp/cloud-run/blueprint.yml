@@ -41,13 +41,6 @@ workflow-templates:
   - name: development
     description: |
       Automates the lifecycle of the development environment. The workflow consists of the following jobs: build, deploy, configure access, and update the artifact version. The build-container-image step is customizable.
-
-      When using this workflow, you will provide the following custom automation and configuration:
-
-      * **skylounge-job: integration-test**: You will provide a URI to your integration test
-
-      * **skylounge-step: build-container-image**: You can pick how you build your container image, using either Docker or Pack.
-
     uri: sky-lounge/public-skylounge-library/blueprints/gcp/cloud-run/workflow-templates/development.yml
     documentation: |
       The GOOGLE_CREDENTIALS_DEV will be used to authenticate to GCP.
