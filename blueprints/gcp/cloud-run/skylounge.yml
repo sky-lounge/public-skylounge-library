@@ -14,6 +14,8 @@ workflows:
           dns_zone_name: # The zone name in Google DNS where to configure the domain mapping. Example: skyloungedev
           cloud_run_location: # The location where your application is deployed. Example: us-central1
           cloud_run_invoker: # OPTIONAL - The name of the user allowed to invoke your Cloud Run service. For any authenticated Google user, use `allUsers`. For public access, leave it empty. Example: allUsers
+      - job: integration-test
+        uri: # The URI to your integration tests. Example: sky-lounge/hello-app/skylounge/integration-test.yml
     params:
       build_paths: # An array of paths which trigger the build job on change. Example: ["src/**", "build.gradle", "service.yaml"]
       cloud_run_domain: # The domain to configure for your application. Example: dashboard.skylounge.dev
