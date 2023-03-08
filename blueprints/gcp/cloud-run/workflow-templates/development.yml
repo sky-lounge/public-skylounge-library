@@ -110,8 +110,9 @@ jobs:
           CLOUD_RUN_INVOKER: ((_cloud_run_invoker))
       - name: Terraform Apply
         run: terraform apply -auto-approve
+  integration-test: skylounge-job
   artifact-version:
-    needs: deploy
+    needs: integration-test
     name: Update artifact version
     runs-on: ubuntu-latest
     steps:
