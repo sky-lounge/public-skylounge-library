@@ -16,7 +16,7 @@ workflows:
       - job: integration-test
         uri: # The URI to your integration tests. Example: sky-lounge/hello-app/skylounge/integration-test.yml
     params:
-      build_paths: # An array of paths which trigger the build job on change. Example: ['src/**', 'build.gradle', 'service.yaml']
+      build_paths: # An array of paths which trigger the build job on change. Example: ["src/**", "build.gradle", "service.yaml"]
       gcp_project: # The Google Cloud project name where the application is deployed. Example: skylounge-dev
       cloud_run_domain: # The domain to configure for your application. Example: dashboard.skylounge.dev
   - workflow: production
