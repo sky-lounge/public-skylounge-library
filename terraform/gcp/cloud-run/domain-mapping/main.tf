@@ -69,16 +69,16 @@ resource "google_cloud_run_domain_mapping" "crdm" {
   }
 }
 
-locals {
-  record = google_cloud_run_domain_mapping.crdm.status.*.resource_records
-  rrdata = one(local.record).*.rrdata[0]
-}
+# locals {
+#   record = google_cloud_run_domain_mapping.crdm.status.*.resource_records
+#   rrdata = one(local.record).*.rrdata[0]
+# }
 
-resource "google_dns_record_set" "cname" {
-  name         = "${var.cloud_run_domain}."
-  managed_zone = data.google_dns_managed_zone.zone.name
-  type         = "CNAME"
-  ttl          = 300
+# resource "google_dns_record_set" "cname" {
+#   name         = "${var.cloud_run_domain}."
+#   managed_zone = data.google_dns_managed_zone.zone.name
+#   type         = "CNAME"
+#   ttl          = 300
 
-  rrdatas = [local.rrdata]
-}
+#   rrdatas = [local.rrdata]
+# }
