@@ -17,7 +17,8 @@ workflows:
       - job: integration-test
         uri: # The URI to your integration tests job definition. Example: sky-lounge/hello-cf/skylounge/integration-test.yml
       - job: owasp-zap-full-scan
-        params: dev_endpoint_to_scan # The dev app route/enpdoint to scan. Example: https://hello-cf.skylounge.dev
+        params:
+          dev_endpoint_to_scan: # The dev app route/enpdoint to scan. Example: https://hello-cf.skylounge.dev
     params:
       build_paths: # An array of paths which trigger the build job on change. Example: ["src/**", "build.gradle", "service.yaml"]
 params:
