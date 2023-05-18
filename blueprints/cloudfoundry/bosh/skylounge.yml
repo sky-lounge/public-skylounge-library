@@ -1,5 +1,5 @@
 ---
-blueprint-uri: sky-lounge/public-skylounge-library/blueprints/gcp/cloud-run/blueprint.yml
+blueprint-uri: sky-lounge/public-skylounge-library/blueprints/cloudfoundry/bosh/blueprint.yml
 
 workflows:
   - workflow: development
@@ -17,7 +17,7 @@ workflows:
       - job: integration-test
         uri: # The URI to your integration tests job definition. Example: sky-lounge/hello-cf/skylounge/integration-test.yml
     params:
-      build_paths: # An array of paths which trigger the build job on change. Example: ["src/**", "build.gradle", "service.yaml"]
+      build_paths: # An array of paths which trigger the build job on change. Example: ["public","nginx.conf","skylounge","dev-manifest"]
       dev_endpoint: # The dev app route/enpdoint. Example: https://hello-cf.skylounge.dev
 params:
   main_branch: # The name of the main branch in the repository. Example: "main"
