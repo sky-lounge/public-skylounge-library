@@ -11,7 +11,7 @@ workflows:
       - job: deploy
         steps:
           - step: pre-deploy
-            uri: # The URI to the pre-deploy step definition. This should be used to provision service instances, run database updates, etc. You can use sky-lounge/skylounge-library/steps/no-step/step.yml to skip pre-deploy setup. Example: sky-lounge/hello-cf/skylounge/pre-deploy.yml
+            uri: # The URI to the pre-deploy step definition. Use sky-lounge/skylounge-library/steps/no-step/step.yml to skip pre-deploy setup. Example: sky-lounge/hello-cf/skylounge/pre-deploy.yml
           - step: deploy
             uri: # The URI to the deploy step definition. Example: sky-lounge/skylounge-library/steps/cloudfoundry/deploy/deploy.yml
       - job: integration-test
