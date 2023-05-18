@@ -1,0 +1,35 @@
+---
+name: Production
+
+on:
+  push:
+    branches:
+      - ((main_branch))
+    paths:
+      - .github/production-version.txt
+  workflow_run:
+    workflows: ["Promote"]
+    types: ["completed"]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to production space
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v3
+
+      - name: Deploy
+        run: |
+          cf api $API
+          cf auth
+          cf target -o $ORG -s $SPACE
+          cf push -f prod-manifest.yml
+          cf set-label "${{ github.sha }}"
+        env:
+          API: ((cf_prod_api))
+          CF_USERNAME: ${{ secrets.CF_PROD_USERNAME }}
+          CF_PASSWORD: ${{ secrets.CF_PROD_PASSWORD }}
+          ORG: ((cf_prod_org))
+          SPACE: ((cf_prod_space))

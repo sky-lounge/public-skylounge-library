@@ -1,0 +1,103 @@
+display-name: cloud.gov
+description: |
+
+documentation: |
+
+tags:
+  - penetration-test
+weight: 2
+workflow-templates:
+  - name: development
+    description: |
+      Automates the lifecycle of the development environment. The workflow consists of the following jobs: build, deploy, configure access, and update the artifact version. The build-container-image step is customizable.
+    uri: sky-lounge/public-skylounge-library/blueprints/gcp/cloud-run/workflow-templates/development.yml
+    documentation: |
+      The GOOGLE_CREDENTIALS_DEV will be used to authenticate to GCP.
+
+      ## Jobs
+
+      This workflow consists of the following jobs:
+
+      #### build
+
+      Builds the container image. 
+
+      * The image name is set to: `((registry_url))/<name_of_the_repository>:<commit_sha>`. The commit_sha is used for absolute traceability to a specific commit.
+      * **build-container-image (skylounge-step)**: A configurable step to build the container image (see step library for buildpack or Docker implementations). This step must use the image name above, available as the `$IMAGE_NAME` environment variable.
+      * Publishes the conatiner image to the artifact registry.
+
+      #### deploy
+
+      Deploys the container image to Google Cloud Run. 
+
+      The deployment requires a [service.yaml](https://cloud.google.com/run/docs/reference/yaml/v1) file to be available in the root of the repository. The service.yaml should use the following parameters to ensure the same file is used in development and production. They will be replaced automatically in the job.
+      * `${IMAGE_NAME}`: The image name calculated in the build job above. Example:
+        ```
+        spec:
+          template:
+            spec:
+              containers:
+              - image: ${IMAGE_NAME}
+        ```
+      * `${GCP_PROJECT}`: The GCP project where the service is deployed. Example:
+        ```
+        spec:
+          template:
+            metadata:
+              annotations:
+                run.googleapis.com/cloudsql-instances: "${GCP_PROJECT}:us-central1:skylounge-db"
+        ```
+
+      #### configure access
+
+      Configures access to the Cloud Run application using Terraform. The terraform is available here: https://github.com/sky-lounge/public-skylounge-library/terraform/gcp/cloud-run/domain-mapping.
+
+      * This job creates a dns route for the application. 
+      * GCP will provision a certificate for this application during the first execution of this job (and subsequently automatically renew it). **Therefore, the application will not be available until this is complete. This process can take up to 30 minutes**. Subsequent updates are not affected by this provisioning process.
+      * The job optionally configures access control for the application. Refer to the documentation in the `skylounge.yml` for configuration options.
+
+      #### artifact version
+
+      The version of the container image deployed is stored in the root of the repository in a file named `development-version.txt`. This provides absolute traceability, through git history, of the deployed version at a given point in time.
+
+    branch: main
+    icon: bi bi-code-slash
+  - name: promote
+    description: |
+      Promote from development to production by updating production-version.txt in the repository. This workflow is manually triggered.
+    uri: sky-lounge/public-skylounge-library/blueprints/gcp/cloud-run/workflow-templates/promote.yml
+    documentation: |
+      ## Versioning semantics
+      Deployed version state is tracked in the repository using two files: development-version.txt and production-version.txt for the development and production deployments respectively. Version values correspond to the commit SHA of the last change made in development that triggered the development workflow. This enables easy tracking of deployed features.
+
+      The development version is set automatically in the development workflow after integration tests complete successfully. The single job in this workflow copies the development SHA to the production version file production-version.txt. This triggers the execution of the production workflow to complete the deployment.
+
+      ## Rollback
+      Rollback can be completed by updating the production-version.txt file to the SHA of the version you would like to roll back to. This will trigger the production workflow to complete the rollback.
+    branch: main
+    icon: bi bi-mortarboard
+  - name: production
+    description: |
+      Deploy the production application to Cloud Run by fetching a specific version from Artifact Registry. This workflow triggers when the production-version.txt file changes and deploys the image version specified in the file.
+    uri: sky-lounge/public-skylounge-library/blueprints/gcp/cloud-run/workflow-templates/production.yml
+    documentation: |
+      ## Deploy to production
+      The deploy job does the following:
+
+      Deploys the container image to Google Cloud Run corresponding to the the version specified in the production-version.txt file.
+
+      ## Rollback
+      Rollback can be completed by updating the production-version.txt file to the SHA of the version you would like to roll back to. This will trigger the production workflow to complete the rollback.
+    branch: main
+    icon: bi bi-check2-circle
+
+  - name: daily-scans
+    description: |
+      Performs scans against the production deployment each day at 2 AM. Vulnerabilities are reported via a GitHub issue.
+    uri: sky-lounge/public-skylounge-library/blueprints/gcp/cloud-run/workflow-templates/daily-scans.yml
+    documentation: |
+      ## OWASP ZAP Full Scan
+
+      Performs an [OWASP ZAP Full Scan](https://www.zaproxy.org/docs/docker/full-scan/) against the production instance using this [GitHub Action](https://github.com/sky-lounge/public-skylounge-library/tree/main/actions/owasp-zap-full).
+    branch: main
+    icon: bi bi-box-arrow-in-right

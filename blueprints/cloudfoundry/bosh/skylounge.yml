@@ -1,0 +1,24 @@
+---
+blueprint-uri: sky-lounge/public-skylounge-library/blueprints/gcp/cloud-run/blueprint.yml
+
+workflows:
+  - workflow: development
+    jobs:
+      - job: unit-test
+        steps:
+          - step: unit-test
+            uri: # The URI to the unit-test step definition. Example: sky-lounge/skylounge-library/steps/unit-test/nginx/unit-test.yml
+      - job: deploy
+        steps:
+          - step: pre-deploy
+            uri: # The URI to the pre-deploy step definition. This should be used to provision service instances, run database updates, etc. You can use sky-lounge/skylounge-library/steps/no-step/step.yml to skip pre-deploy setup. Example: sky-lounge/hello-cf/skylounge/pre-deploy.yml
+          - step: deploy
+            uri: # The URI to the deploy step definition. Example: sky-lounge/skylounge-library/steps/cloudfoundry/deploy/deploy.yml
+      - job: integration-test
+        uri: # The URI to your integration tests job definition. Example: sky-lounge/hello-cf/skylounge/integration-test.yml
+      - job: owasp-zap-full-scan
+        params: dev_endpoint_to_scan # The dev app route/enpdoint to scan. Example: https://hello-cf.skylounge.dev
+    params:
+      build_paths: # An array of paths which trigger the build job on change. Example: ["src/**", "build.gradle", "service.yaml"]
+params:
+  main_branch: # The name of the main branch in the repository. Example: "main"
