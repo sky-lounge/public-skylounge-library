@@ -35,7 +35,7 @@ jobs:
         uses: zaproxy/action-full-scan@v0.4.0
         id: scan
         with:
-          target: ((dev_endpoint_to_scan))
+          target: ((dev_endpoint))
           rules_file_name: skylounge/owasp/rules.cfg
           issue_title: "OWASP Full Scan - ${{ github.run_number }}"
           token: ${{ github.token }}

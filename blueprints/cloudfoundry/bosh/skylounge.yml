@@ -16,10 +16,8 @@ workflows:
             uri: # The URI to the deploy step definition. Example: sky-lounge/skylounge-library/steps/cloudfoundry/deploy/deploy.yml
       - job: integration-test
         uri: # The URI to your integration tests job definition. Example: sky-lounge/hello-cf/skylounge/integration-test.yml
-      - job: owasp-zap-full-scan
-        params:
-          dev_endpoint_to_scan: # The dev app route/enpdoint to scan. Example: https://hello-cf.skylounge.dev
     params:
       build_paths: # An array of paths which trigger the build job on change. Example: ["src/**", "build.gradle", "service.yaml"]
+      dev_endpoint: # The dev app route/enpdoint. Example: https://hello-cf.skylounge.dev
 params:
   main_branch: # The name of the main branch in the repository. Example: "main"
