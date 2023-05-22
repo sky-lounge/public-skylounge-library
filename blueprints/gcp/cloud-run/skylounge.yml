@@ -30,10 +30,10 @@ workflows:
           cloud_run_invoker: # OPTIONAL - The name of the user allowed to invoke your Cloud Run service. For any authenticated Google user, use `allUsers`. For public access, leave it empty. Example: allUsers
     params:
       gcp_project: # The Google Cloud project name where the application is deployed. Example: skylounge-prod
-  - workflow: daily-scans
-    jobs:
-      - job: owasp-zap-full-scan
-        params:
-          endpoint_to_scan: # The production endpoint to scan. Example: https://dashboard.skylounge.io
+  # - workflow: daily-scans
+  #   jobs:
+  #     - job: owasp-zap-full-scan
+  #       params:
+  #         endpoint_to_scan: # The production endpoint to scan. Example: https://dashboard.skylounge.io
 params:
   registry_url: # The artifact registry url where container images are stored. Example: us-central1-docker.pkg.dev/skylounge-common/skylounge-registry
