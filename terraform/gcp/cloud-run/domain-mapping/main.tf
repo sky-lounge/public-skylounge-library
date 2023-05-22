@@ -77,7 +77,7 @@ locals {
 resource "google_dns_record_set" "cname" {
   name         = "${var.cloud_run_domain}."
   managed_zone = data.google_dns_managed_zone.zone.name
-  type         = "A"
+  type         = "CNAME"
   ttl          = 300
 
   rrdatas = [local.rrdata]
