@@ -1,7 +1,7 @@
 display-name: Google Cloud Run
 
-hide-in-environments:
-  - production
+# hide-in-environments:
+#   - production
 
 description: |
   Automates the lifecycle of web applications packaged as container images and deployed to Google Cloud Run with Custom Domain mapping. This blueprint is for trunk based development using the main branch as the trunk.
